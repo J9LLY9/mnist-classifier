@@ -1,18 +1,17 @@
-# Python
-__pycache__/
-*.py[cod]
+# Python virtual environment
 .venv/
 venv/
 
-# IDE
+# Python cache files
+__pycache__/
+*.pyc
+
+# PyCharm local configuration
 .idea/
 
-# Datasets and model artifacts
-data/
-datasets/
-*.pt
-*.pth
-*.ckpt
+# macOS files
+.DS_Store
 
 # Environment variables and secrets
 .env
+.env.*
