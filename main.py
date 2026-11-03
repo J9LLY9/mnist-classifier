@@ -1,16 +1,35 @@
+from torchvision import datasets
+from torchvision.transforms import v2
+import matplotlib.pyplot as plt
 import torch
-import torchvision
-import sys
 
-print(sys.version)
-print(f"PyTorch version: {torch.__version__}")
-print(f"Torchvision version: {torchvision.__version__}")
+training_data = datasets.MNIST(
+    root="data",
+    train=True,
+    download=True,
+    transform=v2.Compose([v2.ToImage(), v2.ToDtype(torch.float32, scale=True)])
+)
 
-x =  torch.tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-y= torch.tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+test_data = datasets.MNIST(
+    root="data",
+    train=False,
+    download=True,
+    transform=v2.Compose([v2.ToImage(), v2.ToDtype(torch.float32, scale=True)])
+)
 
-print(x.device)
-print(x.dtype)
-print(x.matmul(y))
+print(len(training_data))
+print(len(test_data))
 
-print(f"Is CUDA available? {torch.cuda.is_available()}")
+image,label = training_data[0]
+print(image.shape)
+print(image.dtype)
+print(image.max())
+
+
+fig, axes = plt.subplots(nrows=5, ncols=2, figsize=(9,9))
+for i, ax in enumerate(axes.flat):
+    image, label = training_data[i]
+    ax.imshow(image.squeeze(), cmap="gray")
+    ax.set_title(f"Label: {label}")
+    ax.axis("off")
+plt.show()
